@@ -6,6 +6,7 @@ module Servo
       mail_array = session.accept
       return unless mail_array.is_a?(Array(Servo::Mail))
       @logger.info("Got #{mail_array.size} mails")
+      @store.process_array(mail_array)
     end
   end
 end

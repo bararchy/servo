@@ -1,0 +1,8 @@
+{
+  "database": {
+    "user":     "servo",
+    "host":     "127.0.0.1",
+    "password": "password",
+    "db_name": "servo"
+  }
+}

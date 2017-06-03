@@ -3,9 +3,11 @@ require "logger"
 
 module Servo
   class GenericServer
-    def initialize(port : Int32, logger : Logger)
+    def initialize(port : Int32, logger : Logger, configs : Servo::Configuration)
       @logger = logger
       @port = port
+      @store = Servo::Storage.new(logger, configs)
+      @configs = configs
     end
 
     def serve
