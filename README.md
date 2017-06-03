@@ -28,4 +28,4 @@ sudo ./servo # This is using port 25 by default right now (which means root priv
 
 ## Contributors
 
-- [bararchy](https://github.com/bararchy) bararchy - creator, maintainer
+- [bararchy](https://github.com/bararchy) - creator, maintainer
