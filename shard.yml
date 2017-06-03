@@ -1,0 +1,13 @@
+name: servo
+version: 0.1.0
+
+authors:
+  - bararchy <bar.hofesh@safe-t.com>
+
+targets:
+  servo:
+    main: src/servo.cr
+
+crystal: 0.22.0+15
+
+license: MIT
