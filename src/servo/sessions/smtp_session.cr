@@ -44,7 +44,6 @@ module Servo
       end
 
       def process_command(command, full_data)
-        @logger.debug("Got Command: #{command.chomp(":")}")
         case command.chomp(":")
         when "DATA"         then data
         when "HELO", "EHLO" then response(250)

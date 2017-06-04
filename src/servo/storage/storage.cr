@@ -16,12 +16,17 @@ module Servo
 
     def process_array(array : Array(Servo::Mail))
       array.each do |mail|
-        @db.exec "insert into mail values (?, ?, ?, ?)", mail.from, mail.to, mail.subject, mail.data
+        @db.exec "insert into mail (from_addr, to_addr, subject, data) values (?, ?, ? ,?)", mail.from, mail.to, mail.subject, mail.data
       end
     end
 
     def generate_tables
-      @db.exec "create table IF NOT EXISTS mail (from varchar(30), to varchar(30), subject varchar(30), data MEDIUMTEXT(max))"
+      @db.exec "CREATE TABLE IF NOT EXISTS mail (id mediumint AUTO_INCREMENT,
+       from_addr varchar(30),
+       to_addr varchar(30),
+       subject varchar(30),
+       data mediumtext,
+       UNIQUE KEY (id))"
     end
   end
 end
