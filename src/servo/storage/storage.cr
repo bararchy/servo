@@ -20,6 +20,26 @@ module Servo
       end
     end
 
+    def get_mails : Hash(Int32, Servo::Mail)
+      hash = {} of Int32 => Servo::Mail
+      @db.query "SELECT id, from_addr, to_addr, subject, data FROM mail" do |rs|
+        rs.each do
+          mail = Servo::Mail.new
+          id = rs.read(Int32)
+          mail.from = rs.read(String)
+          mail.to = rs.read(String)
+          mail.subject = rs.read(String)
+          mail.data = rs.read(String)
+          hash[id] = mail
+        end
+      end
+      hash
+    end
+
+    def delete_id(id : Int32)
+      @db.exec "DELETE FROM mail WHERE id = #{id}"
+    end
+
     def generate_tables
       @db.exec "CREATE TABLE IF NOT EXISTS mail (id mediumint AUTO_INCREMENT,
        from_addr varchar(30),

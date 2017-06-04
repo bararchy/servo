@@ -4,5 +4,9 @@
     "host":     "127.0.0.1",
     "password": "password",
     "db_name": "servo"
+  },
+  "mta": {
+    "host": "192.168.9.240",
+    "port": 25
   }
 }
