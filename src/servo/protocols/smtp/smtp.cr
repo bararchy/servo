@@ -21,7 +21,7 @@ module Servo
       550 => "Requested action not taken: mailbox unavailable",
       551 => "User not local; please try <forward-path>",
       552 => "Requested mail action aborted: exceeded storage allocation",
-      553 => "Requested action not taken: mailbox name not allowed",
+      553 => "Requested action not taken: mailbox name invalid",
       554 => "Transaction failed",
     }
   end

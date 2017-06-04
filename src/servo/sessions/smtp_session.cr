@@ -20,7 +20,7 @@ module Servo
             command = input.to_s.split(' ', 2).first.upcase.strip
             process_command(command, input)
           rescue e : Exception
-            @logger.error("Error in SMTPSession: #{e}")
+            @logger.error("Error in SMTPSession: #{e.class} #{e}")
             @logger.debug("#{e.backtrace}")
             @client.close
             break
@@ -86,7 +86,9 @@ module Servo
       # Store sender address
       def mail_from(full_data)
         if /^MAIL FROM:/ =~ full_data.upcase
-          @current_mail.from = full_data.gsub(/^MAIL FROM:\s*/i, "").gsub(/[\r\n]/, "")
+          from = full_data.gsub(/^MAIL FROM:\s*/i, "").gsub(/[\r\n]/, "")
+          return response(553) unless Servo::Validation::RFC2822.valid_addr?(from.gsub(/(<|>)/, ""))
+          @current_mail.from = from
           response(250)
         else
           response(500)
@@ -96,7 +98,9 @@ module Servo
       # Store recepient address
       def rcpt_to(full_data)
         if /^RCPT TO:/ =~ full_data.upcase
-          @current_mail.to = full_data.gsub(/^RCPT TO:\s*/i, "").gsub(/[\r\n]/, "")
+          to = full_data.gsub(/^RCPT TO:\s*/i, "").gsub(/[\r\n]/, "")
+          return response(553) unless Servo::Validation::RFC2822.valid_addr?(to.gsub(/(<|>)/, ""))
+          @current_mail.to = to
           response(250)
         else
           response(500)
