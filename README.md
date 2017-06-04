@@ -14,8 +14,12 @@ sudo ./servo # This is using port 25 by default right now (which means root priv
 ## Development
 
 - [ ] Add more protocols  
-- [ ] Add databse to store mails, users, etc.. (mariaDB ? maybe PG ? )  
+- [x] Add databse to store mails, users, etc.. (mariaDB ? maybe PG ? )  
+  - [ ] Add more functionallity to the Storage class  
 - [ ] Add support for openssl\STARTLS  
+- [ ] Add SMTP client \ forwarder under the delivery folder  
+- [ ] Add validation using RFC 2822  
+- [ ] Add support for authentication  
 
 
 ## Contributing
