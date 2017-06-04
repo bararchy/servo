@@ -11,7 +11,7 @@ module Servo
       end
 
       def accept
-        response(250)
+        response(220)
         loop do
           break if @client.closed?
           begin
@@ -40,7 +40,7 @@ module Servo
       end
 
       def response(status : Int32)
-        @client.write "#{status} #{Servo::SMTP::RESPONSES[status]}\n".to_slice
+        @client.write "#{status} #{Servo::Protocols::SMTP::RESPONSES[status]}\n".to_slice
       end
 
       def process_command(command, full_data)
