@@ -22,16 +22,22 @@ module Servo
 
     def get_mails : Hash(Int32, Servo::Mail)
       hash = {} of Int32 => Servo::Mail
-      @db.query "SELECT id, from_addr, to_addr, subject, data FROM mail" do |rs|
-        rs.each do
-          mail = Servo::Mail.new
-          id = rs.read(Int32)
-          mail.from = rs.read(String)
-          mail.to = rs.read(String)
-          mail.subject = rs.read(String)
-          mail.data = rs.read(String)
-          hash[id] = mail
+      begin
+        @db.query "SELECT * FROM mail" do |rs|
+          rs.each do
+            mail = Servo::Mail.new
+            id = rs.read(Int32)
+            mail.from = rs.read(String)
+            mail.to = rs.read(String)
+            mail.subject = rs.read(String)
+            mail.data = rs.read(String)
+            hash[id] = mail
+          end
+          rs.close
         end
+      rescue e : Exception
+        @logger.error("Error while get_mails: #{e}")
+        @logger.debug("Backtrace: #{e.backtrace}")
       end
       hash
     end
@@ -41,11 +47,11 @@ module Servo
     end
 
     def generate_tables
-      @db.exec "CREATE TABLE IF NOT EXISTS mail (id mediumint AUTO_INCREMENT,
-       from_addr varchar(30),
-       to_addr varchar(30),
-       subject varchar(30),
-       data mediumtext,
+      @db.exec "CREATE TABLE IF NOT EXISTS mail (id INTEGER AUTO_INCREMENT NOT NULL,
+       from_addr varchar(30) NOT NULL,
+       to_addr varchar(30) NOT NULL,
+       subject varchar(30) NOT NULL,
+       data mediumtext NOT NULL,
        UNIQUE KEY (id))"
     end
   end
